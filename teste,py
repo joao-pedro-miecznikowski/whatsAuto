@@ -1,0 +1,76 @@
+import requests
+import re
+from bs4 import BeautifulSoup
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.pipeline import make_pipeline
+
+# Lista de fontes verificadas para checagem de notícias
+FACT_CHECK_SITES = [
+    "https://www.snopes.com/",
+    "https://www.politifact.com/",
+    "https://factcheck.org/"
+]
+
+def get_fact_check_results(query):
+    """Busca a notícia em sites de checagem de fatos."""
+    results = []
+    
+    for site in FACT_CHECK_SITES:
+        search_url = f"{site}?s={query.replace(' ', '+')}"
+        try:
+            response = requests.get(search_url, timeout=5)
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.text, 'html.parser')
+                links = soup.find_all('a', href=True)
+                for link in links:
+                    if query.lower() in link.text.lower():
+                        results.append((link.text, link['href']))
+        except Exception as e:
+            print(f"Erro ao buscar em {site}: {e}")
+    
+    return results
+
+# Modelo de aprendizado de máquina melhorado com mais dados
+# Expansão da base de dados
+data = [
+    ("PIB do Brasil cresce 3,4% em 2024, diz IBGE", "real"),
+    ("O governo anunciou um novo plano de vacinação", "real"),
+    ("NASA confirma presença de água em Marte", "real"),
+    ("OMS recomenda reforço anual da vacina contra gripe", "real"),
+    ("Cientistas descobrem nova espécie de dinossauro na América do Sul", "real"),
+    ("Novo tratamento para Alzheimer apresenta resultados promissores", "real"),
+    ("Eclipse solar total será visível em várias partes do mundo", "real"),
+    ("Técnica inovadora permite restaurar visão em pacientes cegos", "real"),
+    ("Descoberta cura milagrosa para o câncer sem aprovação científica", "fake"),
+    ("Homem diz ter visitado outra dimensão", "fake"),
+    ("Vacinas causam autismo, revela estudo escondido", "fake"),
+    ("Chá de limão com alho pode substituir todas as vacinas", "fake"),
+    ("Novo chip implantado no cérebro permite ler mentes", "fake"),
+    ("Terra será atingida por meteoro gigante nos próximos dias", "fake"),
+    ("Governo esconde provas de contato alienígena", "fake"),
+    ("Inteligência artificial já controla metade dos governos mundiais", "fake")
+]
+
+texts, labels = zip(*data)
+vectorizer = TfidfVectorizer()
+classifier = MultinomialNB()
+model = make_pipeline(vectorizer, classifier)
+model.fit(texts, labels)
+
+def analyze_news(news_text):
+    """Analisa a notícia e retorna se ela pode ser falsa ou real."""
+    prediction = model.predict([news_text])[0]
+    fact_check_results = get_fact_check_results(news_text)
+    return prediction, fact_check_results
+
+if __name__ == "__main__":
+    news = input("Digite o título da notícia: ")
+    prediction, sources = analyze_news(news)
+    print(f"Classificação da notícia: {prediction}")
+    if sources:
+        print("Fontes verificadas:")
+        for title, url in sources:
+            print(f"- {title}: {url}")
+    else:
+        print("Nenhuma fonte confiável encontrada.")

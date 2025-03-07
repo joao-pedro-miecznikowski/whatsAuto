@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Solar com Horário de Brasília</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: radial-gradient(circle, #0a0a23, #000000);
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #clock {
+            color: white;
+            font-size: 24px;
+            margin: 20px;
+            text-align: center;
+        }
+        .solar-system {
+            position: relative;
+            width: 1000px;
+            height: 1000px;
+        }
+        .sun {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #ffeb3b, #ff9800);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 40px #ffeb3b;
+        }
+        .orbit {
+            position: absolute;
+            border: 1px dashed rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .planet {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, white, currentColor);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px black;
+        }
+        /* Órbitas e planetas maiores */
+        .mercury-orbit { width: 200px; height: 200px; animation: orbit 4s infinite linear; }
+        .venus-orbit { width: 300px; height: 300px; animation: orbit 10s infinite linear; }
+        .earth-orbit { width: 400px; height: 400px; animation: orbit 15s infinite linear; }
+        .mars-orbit { width: 500px; height: 500px; animation: orbit 20s infinite linear; }
+        .jupiter-orbit { width: 650px; height: 650px; animation: orbit 30s infinite linear; }
+        .saturn-orbit { width: 800px; height: 800px; animation: orbit 40s infinite linear; }
+        .uranus-orbit { width: 900px; height: 900px; animation: orbit 50s infinite linear; }
+        .neptune-orbit { width: 1000px; height: 1000px; animation: orbit 60s infinite linear; }
+
+        .mercury { width: 20px; height: 20px; background: #b0b0b0; top: -10px; left: 50%; }
+        .venus { width: 30px; height: 30px; background: #ffcc80; top: -15px; left: 50%; }
+        .earth { width: 35px; height: 35px; background: #42a5f5; top: -17.5px; left: 50%; }
+        .mars { width: 25px; height: 25px; background: #ef5350; top: -12.5px; left: 50%; }
+        .jupiter { width: 70px; height: 70px; background: #ffca28; top: -35px; left: 50%; font-size: 18px; }
+        .saturn { width: 60px; height: 60px; background: #ffd54f; top: -30px; left: 50%; font-size: 16px; }
+        .saturn::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 3px;
+            background: #d4a017;
+            top: 50%;
+            left: -10px;
+            transform: translateY(-50%);
+            z-index: -1;
+        }
+        .uranus { width: 50px; height: 50px; background: #4fc3f7; top: -25px; left: 50%; }
+        .neptune { width: 50px; height: 50px; background: #0288d1; top: -25px; left: 50%; }
+
+        @keyframes orbit {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div id="clock"></div>
+    <div class="solar-system">
+        <div class="sun"></div>
+        <div class="orbit mercury-orbit"><div class="planet mercury">Mercúrio</div></div>
+        <div class="orbit venus-orbit"><div class="planet venus">Vênus</div></div>
+        <div class="orbit earth-orbit"><div class="planet earth">Terra</div></div>
+        <div class="orbit mars-orbit"><div class="planet mars">Marte</div></div>
+        <div class="orbit jupiter-orbit"><div class="planet jupiter">Júpiter</div></div>
+        <div class="orbit saturn-orbit"><div class="planet saturn">Saturno</div></div>
+        <div class="orbit uranus-orbit"><div class="planet uranus">Urano</div></div>
+        <div class="orbit neptune-orbit"><div class="planet neptune">Netuno</div></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const brasiliaTime = now.toLocaleString("pt-BR", { 
+                timeZone: "America/Sao_Paulo",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            });
+            document.getElementById("clock").textContent = `Horário de Brasília: ${brasiliaTime}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
