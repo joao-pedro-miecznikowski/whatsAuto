@@ -32,41 +32,6 @@ O desenvolvimento deste projeto foi realizado com:
 
 ---
 
-## 🚀 **Como Executar o Projeto no Visual Studio Code**
-
-1.  **Clone o Repositório**:
-
-    ```bash
-    git clone https://github.com/joao-pedro-miecznikowski/whatsAuto.git
-    ```
-
-    ```bash
-    cd whatsapp-automatico
-    ```
-
-2.  **Instale as Dependências**: Instale as bibliotecas necessárias com o seguinte comando:
-
-    ```bash
-    pip install selenium tkinter webdriver-manager
-    ```
-
-3.  **Execute o Script**: Execute o código Python:
-
-    ```bash
-    python app.py
-    ```
-
-4.  **Escaneie o QR Code**: Ao rodar o script, será exibido o QR Code para autenticação no WhatsApp Web. Escaneie o código com seu celular para autenticar.
-
-5.  **Preencha os Campos**:
-
-    -   **Contatos**: Digite os contatos separados por vírgula (ex: João, Maria, Pedro).
-    -   **Mensagem**: Escreva a mensagem que deseja enviar para os contatos.
-
-6.  **Envie as Mensagens**: Clique em " Enviar Mensagem" para enviar a mensagem automaticamente para os contatos.
-
----
-
 ## 📚 **Sobre o Projeto**
 
 Este projeto foi desenvolvido para automatizar o envio de mensagens no WhatsApp Web, proporcionando uma forma prática e rápida de comunicação. Utilizando Selenium para automação no navegador e Tkinter para criar uma interface simples, o objetivo é facilitar o envio de mensagens em massa para múltiplos contatos de forma eficiente.
