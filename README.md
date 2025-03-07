@@ -37,7 +37,7 @@ O desenvolvimento deste projeto foi realizado com:
 1.  **Clone o Repositório**:
 
     ```bash
-    git clone [https://github.com/joao-pedro-miecznikowski/whatsapp-automatico.git](https://github.com/joao-pedro-miecznikowski/whatsapp-automatico.git)
+    git clone https://github.com/joao-pedro-miecznikowski/whatsAuto.git
     ```
 
     ```bash
